@@ -20,10 +20,15 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       const Duration(seconds: 2),
       () {
-        Get.offAllNamed(Routes.LOGIN);
-        // DataPreferences.FIRST_INIT == ""
-        //     ? Get.offAllNamed(Routes.LOGIN)
-        //     : Get.offAllNamed(Routes.NAVIGATOR);
+        // Get.offAllNamed(Routes.LOGIN);
+
+        print(DataPreferences.getInit());
+        print(DataPreferences.getLoggedIn());
+        DataPreferences.getInit() == null
+            ? Get.offAllNamed(Routes.LOGIN)
+            : DataPreferences.getLoggedIn() == null
+                ? Get.offAllNamed(Routes.LOGIN)
+                : Get.offAllNamed(Routes.NAVIGATOR);
       },
     );
   }
