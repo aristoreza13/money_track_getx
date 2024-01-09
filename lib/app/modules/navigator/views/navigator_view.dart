@@ -2,6 +2,7 @@ import 'package:fluentui_icons/fluentui_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_track_getx/app/modules/home/views/home_view.dart';
+import 'package:money_track_getx/app/modules/profile/views/profile_view.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -17,7 +18,7 @@ class _BottomBarState extends State<BottomBar> {
     const HomeView(),
     const Text("Stats"),
     const Text("Schedule"),
-    const Text("Profile"),
+    const ProfileView(),
   ];
 
   void _onItemTapped(int index) {
