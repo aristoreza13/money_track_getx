@@ -47,11 +47,6 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    // if (DataPreferences.getBalance() == 0) {
-    //   totalBalance.value = 0;
-    // } else {
-    //   totalBalance.value = DataPreferences.getBalance()!;
-    // }
     super.onInit();
   }
 

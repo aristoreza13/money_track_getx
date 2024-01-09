@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:money_track_getx/app/data/models/transaction_item.dart';
+import 'package:money_track_getx/app/modules/profile/controllers/profile_controller.dart';
 import 'package:money_track_getx/common/Colors.dart';
 import 'package:money_track_getx/helpers/currency_helper.dart';
 import 'package:money_track_getx/helpers/data_preferences.dart';
@@ -18,6 +19,7 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final HomeController homeC = Get.find();
+    final ProfileController profileC = Get.find();
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(Get.height * 0.3),
@@ -42,25 +44,36 @@ class HomeView extends GetView<HomeController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    const Text(
-                      "Hello, You",
-                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: BoxDecoration(
-                        color: AppColors.purpleMedium,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Center(
-                        child: SizedBox(
-                          height: 30,
-                          width: 30,
-                          child: Image.asset("assets/images/goat.png"),
-                        ),
+                    Obx(
+                      () => Text(
+                        "Hello, ${profileC.nameText}",
+                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ),
+                    CircleAvatar(
+                      backgroundColor: AppColors.purpleMedium,
+                      radius: 25.0,
+                      backgroundImage: profileC.photoUrl.value == ""
+                          ? const AssetImage('assets/images/goat.png') as ImageProvider
+                          : NetworkImage(
+                              profileC.photoUrl.value,
+                            ),
+                    ),
+                    // Container(
+                    //   height: 50,
+                    //   width: 50,
+                    //   decoration: BoxDecoration(
+                    //     color: AppColors.purpleMedium,
+                    //     borderRadius: BorderRadius.circular(20),
+                    //   ),
+                    //   child: Center(
+                    //     child: SizedBox(
+                    //       height: 30,
+                    //       width: 30,
+                    //       child: Image.asset("assets/images/goat.png"),
+                    //     ),
+                    //   ),
+                    // ),
                   ]),
                   const Text(
                     "Total balance",
