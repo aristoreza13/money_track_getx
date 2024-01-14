@@ -9,6 +9,8 @@ import '../modules/navigator/bindings/navigator_binding.dart';
 import '../modules/navigator/views/navigator_view.dart';
 import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
+import '../modules/stats/bindings/stats_binding.dart';
+import '../modules/stats/views/stats_view.dart';
 
 part 'app_routes.dart';
 
@@ -42,6 +44,11 @@ class AppPages {
       name: _Paths.LOGIN,
       page: () => const LoginView(),
       binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.STATS,
+      page: () => const StatsView(),
+      binding: StatsBinding(),
     ),
   ];
 }

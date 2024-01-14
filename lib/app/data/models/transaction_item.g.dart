@@ -17,29 +17,26 @@ class TransactionItemAdapter extends TypeAdapter<TransactionItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return TransactionItem(
+      fields[3] as String,
+      fields[2] as int,
+      fields[5] == null ? false : fields[5] as bool,
       fields[0] as String,
       fields[1] as String,
-      fields[3] as int,
-      fields[2] as String,
-      fields[5] == null ? false : fields[5] as bool,
-      fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, TransactionItem obj) {
     writer
-      ..writeByte(6)
+      ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.status)
-      ..writeByte(1)
-      ..write(obj.date)
-      ..writeByte(2)
-      ..write(obj.transactionType)
-      ..writeByte(3)
-      ..write(obj.amount)
-      ..writeByte(4)
       ..write(obj.type)
+      ..writeByte(1)
+      ..write(obj.category)
+      ..writeByte(2)
+      ..write(obj.amount)
+      ..writeByte(3)
+      ..write(obj.date)
       ..writeByte(5)
       ..write(obj.isCompleted);
   }

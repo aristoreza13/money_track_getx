@@ -5,23 +5,19 @@ part 'transaction_item.g.dart';
 @HiveType(typeId: 1)
 class TransactionItem {
   @HiveField(0)
-  final String status;
+  final String type;
 
   @HiveField(1)
-  final String date;
+  final String category;
 
   @HiveField(2)
-  final String transactionType;
-
-  @HiveField(3)
   final int amount;
 
-  @HiveField(4)
-  final String type;
+  @HiveField(3)
+  final String date;
 
   @HiveField(5, defaultValue: false)
   bool isCompleted;
 
-  TransactionItem(
-      this.status, this.date, this.amount, this.transactionType, this.isCompleted, this.type);
+  TransactionItem(this.date, this.amount, this.isCompleted, this.type, this.category);
 }

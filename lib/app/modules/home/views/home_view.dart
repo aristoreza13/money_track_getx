@@ -137,53 +137,55 @@ class HomeView extends GetView<HomeController> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          CarouselSlider(
-            items: homeC.quotesList
-                .map((quote) => Image.asset(
-                      quote,
-                      width: Get.width * 0.9,
-                    ))
-                .toList(),
-            options: CarouselOptions(
-              autoPlayInterval: const Duration(seconds: 5),
-              autoPlay: true,
-              viewportFraction: 1,
-              enlargeCenterPage: false,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            CarouselSlider(
+              items: homeC.quotesList
+                  .map((quote) => Image.asset(
+                        quote,
+                        width: Get.width * 0.9,
+                      ))
+                  .toList(),
+              options: CarouselOptions(
+                autoPlayInterval: const Duration(seconds: 5),
+                autoPlay: true,
+                viewportFraction: 1,
+                enlargeCenterPage: false,
+              ),
             ),
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(horizontal: 30),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                const Text("Transaction"),
-                GestureDetector(
-                  child: const Text(
-                    "See all",
-                    style: TextStyle(color: AppColors.purpleMedium),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 30),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  const Text("Transaction"),
+                  GestureDetector(
+                    child: const Text(
+                      "See all",
+                      style: TextStyle(color: AppColors.purpleMedium),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: Container(
+            Container(
               height: Get.height,
               margin: const EdgeInsets.all(20),
               child: FutureBuilder(
                 future: homeC.transactionService.getAllTransaction(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
-                    // return TransactionListPage();
                     return ValueListenableBuilder(
                       valueListenable: Hive.box<TransactionItem>('transactionBox').listenable(),
                       builder: (context, box, _) {
+                        if (box.isEmpty) {
+                          return const Text("No data");
+                        }
                         return ListView.separated(
                           shrinkWrap: true,
-                          // physics: const NeverScrollableScrollPhysics(),
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: box.values.length,
                           separatorBuilder: (BuildContext context, int index) {
                             return const SizedBox(height: 10);
@@ -223,10 +225,10 @@ class HomeView extends GetView<HomeController> {
                                         transaction!.date,
                                         style: const TextStyle(color: AppColors.greyText),
                                       ),
-                                      Text(transaction.transactionType,
+                                      Text(transaction.category,
                                           style: const TextStyle(
                                               color: AppColors.blackColor,
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               fontWeight: FontWeight.bold)),
                                     ],
                                   ),
@@ -276,8 +278,8 @@ class HomeView extends GetView<HomeController> {
                 },
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.purpleMedium,
@@ -290,12 +292,12 @@ class HomeView extends GetView<HomeController> {
                 content: SingleChildScrollView(
                   child: Column(
                     children: [
-                      CustomTextInput(
-                        label: "Status",
-                        textInputType: TextInputType.text,
-                        textInputAction: TextInputAction.next,
-                        controller: homeC.statusController,
-                      ),
+                      // CustomTextInput(
+                      //   label: "Status",
+                      //   textInputType: TextInputType.text,
+                      //   textInputAction: TextInputAction.next,
+                      //   controller: homeC.statusController,
+                      // ),
                       Row(
                         children: [
                           const Text(
@@ -322,14 +324,44 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                      CustomTextInput(
-                        label: "Tipe Pembayaran",
-                        textInputType: TextInputType.text,
-                        textInputAction: TextInputAction.next,
-                        controller: homeC.paymentTypeController,
+                      // CustomTextInput(
+                      //   label: "Tipe Pembayaran",
+                      //   textInputType: TextInputType.text,
+                      //   textInputAction: TextInputAction.next,
+                      //   controller: homeC.paymentTypeController,
+                      // ),
+                      Obx(
+                        () => homeC.chosenType.value == 'income'
+                            ? const SizedBox()
+                            : Row(
+                                children: [
+                                  const Text(
+                                    "Category",
+                                    style: TextStyle(fontSize: 14, color: Colors.grey),
+                                  ),
+                                  const Spacer(),
+                                  Obx(
+                                    () => DropdownButton(
+                                      value: homeC.chosenCategory.value,
+                                      items: homeC.listCategory
+                                          .map(
+                                            (type) => DropdownMenuItem(
+                                              value: type,
+                                              child: Text(type.toString()),
+                                            ),
+                                          )
+                                          .toList(),
+                                      onChanged: (value) {
+                                        print(value);
+                                        homeC.chosenCategory(value.toString());
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ),
                       CustomTextInput(
-                        label: "Jumlah",
+                        label: "Amount",
                         textInputType: TextInputType.text,
                         textInputAction: TextInputAction.next,
                         controller: homeC.amountController,
@@ -359,21 +391,30 @@ class HomeView extends GetView<HomeController> {
                 actions: [
                   ElevatedButton(
                     onPressed: () async {
-                      var transaction = TransactionItem(
-                        homeC.statusController.text,
-                        homeC.formattedDate.value,
-                        int.parse(homeC.amountController.text),
-                        homeC.paymentTypeController.text,
-                        false,
-                        homeC.chosenType.value,
-                      );
-                      await homeC.countTransaction();
-                      await homeC.transactionService.addItem(transaction);
+                      if (homeC.chosenType.value == 'income') {
+                        var transaction = TransactionItem(
+                          homeC.formattedDate.value,
+                          int.parse(homeC.amountController.text),
+                          false,
+                          homeC.chosenType.value,
+                          "Income",
+                        );
+                        await homeC.countTransaction();
+                        await homeC.transactionService.addItem(transaction);
+                        await homeC.clearTransactions();
+                      } else {
+                        var transaction = TransactionItem(
+                          homeC.formattedDate.value,
+                          int.parse(homeC.amountController.text),
+                          false,
+                          homeC.chosenType.value,
+                          homeC.chosenCategory.value,
+                        );
+                        await homeC.countTransaction();
+                        await homeC.transactionService.addItem(transaction);
+                        await homeC.clearTransactions();
+                      }
 
-                      homeC.statusController.clear();
-                      homeC.amountController.clear();
-                      homeC.paymentTypeController.clear();
-                      homeC.chosenType('income');
                       Get.back();
                     },
                     child: const Text("Add"),

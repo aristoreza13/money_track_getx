@@ -24,6 +24,15 @@ class HomeController extends GetxController {
 
   List<String> listType = ['income', 'expense'];
 
+  List<String> listCategory = [
+    'Accomodation',
+    'Food n Beverages',
+    'Lifestyle',
+    'Medical',
+    'Daily Needs',
+  ];
+  var chosenCategory = 'Accomodation'.obs;
+
   var chosenType = 'income'.obs;
 
   List<String> quotesList = [
@@ -43,6 +52,13 @@ class HomeController extends GetxController {
       expenseCount.value = expenseCount.value - int.parse(amountController.text);
       await DataPreferences.setExpense(expenseCount.value);
     }
+  }
+
+  clearTransactions() {
+    amountController.clear();
+    formattedDate('');
+    chosenType('income');
+    chosenCategory('Accomodation');
   }
 
   @override

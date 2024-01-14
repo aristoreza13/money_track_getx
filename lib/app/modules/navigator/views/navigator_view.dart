@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_track_getx/app/modules/home/views/home_view.dart';
 import 'package:money_track_getx/app/modules/profile/views/profile_view.dart';
+import 'package:money_track_getx/app/modules/stats/views/stats_view.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -16,7 +17,7 @@ class _BottomBarState extends State<BottomBar> {
   static final List<Widget> _widgetOptions = <Widget>[
     // const Text("Home"),
     const HomeView(),
-    const Text("Stats"),
+    const StatsView(),
     const Text("Schedule"),
     const ProfileView(),
   ];
