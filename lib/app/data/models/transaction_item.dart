@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'transaction_item.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 2)
 class TransactionItem {
   @HiveField(0)
   final String type;

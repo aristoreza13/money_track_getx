@@ -1,44 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction_item.dart';
+part of 'user_data.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class TransactionItemAdapter extends TypeAdapter<TransactionItem> {
+class UserDataAdapter extends TypeAdapter<UserData> {
   @override
-  final int typeId = 2;
+  final int typeId = 1;
 
   @override
-  TransactionItem read(BinaryReader reader) {
+  UserData read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TransactionItem(
-      fields[3] as String,
-      fields[2] as int,
-      fields[5] == null ? false : fields[5] as bool,
-      fields[0] as String,
+    return UserData(
       fields[1] as String,
+      fields[0] as String,
+      (fields[2] as List?)?.cast<TransactionItem>(),
     );
   }
 
   @override
-  void write(BinaryWriter writer, TransactionItem obj) {
+  void write(BinaryWriter writer, UserData obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.type)
-      ..writeByte(1)
-      ..write(obj.category)
-      ..writeByte(2)
-      ..write(obj.amount)
       ..writeByte(3)
-      ..write(obj.date)
-      ..writeByte(5)
-      ..write(obj.isCompleted);
+      ..writeByte(0)
+      ..write(obj.name)
+      ..writeByte(1)
+      ..write(obj.email)
+      ..writeByte(2)
+      ..write(obj.transactionItem);
   }
 
   @override
@@ -47,7 +41,7 @@ class TransactionItemAdapter extends TypeAdapter<TransactionItem> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is TransactionItemAdapter &&
+      other is UserDataAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }
