@@ -29,7 +29,14 @@ class DataPreferences {
   }
 
   static Future clear() async {
-    await _preferences.clear();
+    await _preferences.remove(ALREADY_LOGIN);
+    await _preferences.remove(_keyEmail);
+    await _preferences.remove(_keyPhotoUrl);
+    await _preferences.remove(_keyDisplayName);
+    await _preferences.remove(_keyPassword);
+    await _preferences.remove(_keyBalance);
+    await _preferences.remove(_keyIncome);
+    await _preferences.remove(_keyExpense);
   }
 
   static Future setLoggedIn() async {
