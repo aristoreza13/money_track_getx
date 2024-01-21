@@ -73,20 +73,68 @@ class ProfileView extends GetView<ProfileController> {
         child: Center(
           child: Column(
             children: [
-              ElevatedButton(
-                onPressed: () {
-                  // Aksi yang dijalankan saat tombol Edit Profil ditekan
-                  print('Tombol Edit Profil Ditekan');
-                },
-                child: const Text('Edit Profil'),
+              Container(
+                height: Get.height * 0.4,
+                // color: Colors.grey,
+                child: const Column(
+                  children: [
+                    Card(
+                      elevation: 3,
+                      child: ListTile(
+                        leading: Icon(Icons.settings),
+                        title: Text("Account Settings"),
+                      ),
+                    ),
+                    Card(
+                      elevation: 3,
+                      child: ListTile(
+                        leading: Icon(Icons.privacy_tip),
+                        title: Text("Privacy"),
+                      ),
+                    ),
+                    Card(
+                      elevation: 3,
+                      child: ListTile(
+                        leading: Icon(Icons.lock),
+                        title: Text("Reset Password"),
+                      ),
+                    ),
+                    Card(
+                      elevation: 3,
+                      child: ListTile(
+                        leading: Icon(Icons.language),
+                        title: Text("Language"),
+                      ),
+                    ),
+                    Card(
+                      elevation: 3,
+                      child: ListTile(
+                        leading: Icon(Icons.help),
+                        title: Text("Help"),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 16.0),
-              ElevatedButton(
-                onPressed: () async {
-                  profileC.handleLogout();
-                },
-                child: const Text('Logout'),
+              SizedBox(
+                height: Get.height * 0.12,
+                child: Center(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(backgroundColor: AppColors.purpleMedium),
+                    onPressed: () async {
+                      profileC.handleLogout();
+                    },
+                    child: const Text('Logout'),
+                  ),
+                ),
               ),
+              // ElevatedButton(
+              //   onPressed: () async {
+              //     profileC.handleLogout();
+              //   },
+              //   child: const Text('Logout'),
+              // ),
             ],
           ),
         ),
