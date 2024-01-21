@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:money_track_getx/app/data/models/transaction_item.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../common/Colors.dart';

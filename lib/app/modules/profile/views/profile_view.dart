@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:money_track_getx/app/routes/app_pages.dart';
-import 'package:money_track_getx/helpers/data_preferences.dart';
 
 import '../../../../common/Colors.dart';
 import '../controllers/profile_controller.dart';

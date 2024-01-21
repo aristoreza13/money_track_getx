@@ -1,8 +1,6 @@
 import 'package:hive/hive.dart';
 import 'package:money_track_getx/app/data/models/user_data.dart';
 
-import '../app/data/models/transaction_item.dart';
-
 class UserService {
   final String boxName = "userBox";
 

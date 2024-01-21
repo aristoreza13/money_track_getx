@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:money_track_getx/app/data/models/transaction_item.dart';
 import 'package:money_track_getx/app/routes/app_pages.dart';
 import 'package:money_track_getx/helpers/data_preferences.dart';
-import 'package:money_track_getx/services/transaction_service.dart';
 import 'package:money_track_getx/services/user_service.dart';
 
 import '../../../data/models/user_data.dart';
