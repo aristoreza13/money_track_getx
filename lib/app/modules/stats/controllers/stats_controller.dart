@@ -12,7 +12,7 @@ class StatsController extends GetxController {
     ChartData('Others', 52)
   ];
 
-  List<ChartData> chartTest = [];
+  RxList<ChartData> chartTest = RxList.empty(growable: true);
   List<TransactionItem> listTransactions = [];
 
   TooltipBehavior tooltipBehavior = TooltipBehavior(enable: true);
@@ -20,7 +20,8 @@ class StatsController extends GetxController {
   openTransactionBox() async {
     // print(Hive.box<TransactionItem>('transactionBox').values.toList());
     listTransactions = Hive.box<TransactionItem>('transactionBox').values.toList();
-    chartTest = listTransactions.map((e) => ChartData(e.category, e.amount.toDouble())).toList();
+    chartTest.value =
+        listTransactions.map((e) => ChartData(e.category, e.amount.toDouble())).toList();
 //  chartTest
   }
 
