@@ -12,6 +12,8 @@ import 'package:money_track_getx/helpers/data_preferences.dart';
 import 'package:money_track_getx/widgets/custom_input.dart';
 
 import '../../../../services/transaction_service.dart';
+import '../../../../services/user_service.dart';
+import '../../../data/models/user_data.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -59,21 +61,6 @@ class HomeView extends GetView<HomeController> {
                               profileC.photoUrl.value,
                             ),
                     ),
-                    // Container(
-                    //   height: 50,
-                    //   width: 50,
-                    //   decoration: BoxDecoration(
-                    //     color: AppColors.purpleMedium,
-                    //     borderRadius: BorderRadius.circular(20),
-                    //   ),
-                    //   child: Center(
-                    //     child: SizedBox(
-                    //       height: 30,
-                    //       width: 30,
-                    //       child: Image.asset("assets/images/goat.png"),
-                    //     ),
-                    //   ),
-                    // ),
                   ]),
                   const Text(
                     "Total balance",
@@ -402,6 +389,14 @@ class HomeView extends GetView<HomeController> {
                         await homeC.countTransaction();
                         await homeC.transactionService.addItem(transaction);
                         await homeC.clearTransactions();
+                        List<TransactionItem> listItem =
+                            await TransactionService().getAllTransaction();
+                        UserData userData = UserData(
+                          profileC.emailText.string,
+                          profileC.nameText.string,
+                          listItem,
+                        );
+                        await UserService().updateUser(0, userData);
                       } else {
                         var transaction = TransactionItem(
                           homeC.formattedDate.value,
@@ -413,6 +408,14 @@ class HomeView extends GetView<HomeController> {
                         await homeC.countTransaction();
                         await homeC.transactionService.addItem(transaction);
                         await homeC.clearTransactions();
+                        List<TransactionItem> listItem =
+                            await TransactionService().getAllTransaction();
+                        UserData userData = UserData(
+                          profileC.emailText.string,
+                          profileC.nameText.string,
+                          listItem,
+                        );
+                        await UserService().updateUser(0, userData);
                       }
 
                       Get.back();
