@@ -187,7 +187,7 @@ class LoginView extends GetView<LoginController> {
                   // Aksi yang dijalankan saat tombol login ditekan
                   // print('Tombol Login Ditekan');
 
-                  loginC.loginUser(emailC.text, passwordC.text);
+                  // loginC.loginUser(emailC.text, passwordC.text);
                 },
                 child: Container(
                   width: Get.width * 0.9,
