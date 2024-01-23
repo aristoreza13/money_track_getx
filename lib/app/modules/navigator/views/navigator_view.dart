@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:money_track_getx/app/modules/home/views/home_view.dart';
 import 'package:money_track_getx/app/modules/profile/views/profile_view.dart';
 import 'package:money_track_getx/app/modules/stats/views/stats_view.dart';
+import 'package:money_track_getx/app/modules/timeline/views/timeline_view.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -15,10 +16,9 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   RxInt selectedIndex = 0.obs;
   static final List<Widget> _widgetOptions = <Widget>[
-    // const Text("Home"),
     const HomeView(),
     const StatsView(),
-    const Text("Schedule"),
+    const TimelineView(),
     const ProfileView(),
   ];
 

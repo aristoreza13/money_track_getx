@@ -22,6 +22,7 @@ dependencies:
   device_info_plus: ^9.1.1
   google_sign_in: ^6.1.6
   syncfusion_flutter_charts: ^22.2.12
+  table_calendar: ^3.0.9
 
 dev_dependencies:
   flutter_lints: ^2.0.0

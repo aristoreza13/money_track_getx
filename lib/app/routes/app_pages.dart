@@ -11,6 +11,8 @@ import '../modules/profile/bindings/profile_binding.dart';
 import '../modules/profile/views/profile_view.dart';
 import '../modules/stats/bindings/stats_binding.dart';
 import '../modules/stats/views/stats_view.dart';
+import '../modules/timeline/bindings/timeline_binding.dart';
+import '../modules/timeline/views/timeline_view.dart';
 
 part 'app_routes.dart';
 
@@ -49,6 +51,11 @@ class AppPages {
       name: _Paths.STATS,
       page: () => const StatsView(),
       binding: StatsBinding(),
+    ),
+    GetPage(
+      name: _Paths.TIMELINE,
+      page: () => const TimelineView(),
+      binding: TimelineBinding(),
     ),
   ];
 }
