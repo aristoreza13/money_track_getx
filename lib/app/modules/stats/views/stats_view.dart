@@ -5,7 +5,6 @@ import 'package:money_track_getx/helpers/currency_helper.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import '../../../../common/Colors.dart';
-import '../../../data/models/transaction_item.dart';
 import '../controllers/stats_controller.dart';
 
 class StatsView extends GetView<StatsController> {

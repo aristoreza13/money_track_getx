@@ -9,7 +9,6 @@ import 'package:money_track_getx/app/modules/profile/controllers/profile_control
 import 'package:money_track_getx/app/modules/stats/controllers/stats_controller.dart';
 import 'package:money_track_getx/common/Colors.dart';
 import 'package:money_track_getx/helpers/currency_helper.dart';
-import 'package:money_track_getx/helpers/data_preferences.dart';
 import 'package:money_track_getx/widgets/custom_input.dart';
 
 import '../../../../services/transaction_service.dart';
