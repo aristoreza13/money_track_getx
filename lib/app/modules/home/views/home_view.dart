@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:money_track_getx/app/data/models/transaction_item.dart';
 import 'package:money_track_getx/app/modules/profile/controllers/profile_controller.dart';
+import 'package:money_track_getx/app/modules/stats/controllers/stats_controller.dart';
 import 'package:money_track_getx/common/Colors.dart';
 import 'package:money_track_getx/helpers/currency_helper.dart';
 import 'package:money_track_getx/helpers/data_preferences.dart';
@@ -74,11 +75,7 @@ class HomeView extends GetView<HomeController> {
                           children: [
                             homeC.totalBalance.value == 0
                                 ? TextSpan(
-                                    text: CurrencyHelper.convertToCoin(
-                                      DataPreferences.getBalance() == null
-                                          ? 0
-                                          : DataPreferences.getBalance()!,
-                                    ),
+                                    text: CurrencyHelper.convertToCoin(0),
                                     // text: CurrencyHelper.convertToCoin(int.parse(),
                                     style: const TextStyle(fontSize: 32))
                                 : TextSpan(
@@ -96,9 +93,7 @@ class HomeView extends GetView<HomeController> {
                         homeC.incomeCount.value == 0
                             ? buildIncomeExpense(
                                 "Income",
-                                DataPreferences.getIncome() == null
-                                    ? 0
-                                    : DataPreferences.getIncome()!,
+                                0,
                               )
                             : buildIncomeExpense(
                                 "Income",
@@ -107,9 +102,7 @@ class HomeView extends GetView<HomeController> {
                         homeC.expenseCount.value == 0
                             ? buildIncomeExpense(
                                 "Expenses",
-                                DataPreferences.getExpense() == null
-                                    ? 0
-                                    : DataPreferences.getExpense()!,
+                                0,
                               )
                             : buildIncomeExpense(
                                 "Expenses",
@@ -157,28 +150,140 @@ class HomeView extends GetView<HomeController> {
                 ],
               ),
             ),
+            // Container(
+            //   height: Get.height,
+            //   margin: const EdgeInsets.all(20),
+            //   child: FutureBuilder(
+            //     future: homeC.transactionService.getAllTransaction(),
+            //     builder: (context, snapshot) {
+            //       if (snapshot.connectionState == ConnectionState.done) {
+            //         return ValueListenableBuilder(
+            //           valueListenable: Hive.box<TransactionItem>('transactionBox').listenable(),
+            //           builder: (context, box, _) {
+            //             if (box.isEmpty) {
+            //               return const Text("No data");
+            //             }
+            //             return ListView.separated(
+            //               shrinkWrap: true,
+            //               physics: const NeverScrollableScrollPhysics(),
+            //               itemCount: box.values.length,
+            //               separatorBuilder: (BuildContext context, int index) {
+            //                 return const SizedBox(height: 10);
+            //               },
+            //               itemBuilder: (BuildContext context, int index) {
+            //                 var transaction = box.getAt(index);
+            //                 return Container(
+            //                   height: 75,
+            //                   width: Get.width,
+            //                   padding: const EdgeInsets.symmetric(horizontal: 20),
+            //                   decoration: BoxDecoration(
+            //                     color: Colors.white,
+            //                     borderRadius: BorderRadius.circular(30),
+            //                     border: Border.all(color: AppColors.greyText, width: 1),
+            //                   ),
+            //                   child: Row(
+            //                     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //                     children: [
+            //                       Container(
+            //                         height: 35,
+            //                         width: 35,
+            //                         decoration: BoxDecoration(
+            //                             color: AppColors.purpleMedium,
+            //                             borderRadius: BorderRadius.circular(10)),
+            //                         child: const Center(
+            //                             child: Icon(
+            //                           Icons.shopping_bag,
+            //                           color: AppColors.whiteColor,
+            //                         )),
+            //                       ),
+            //                       const SizedBox(width: 10),
+            //                       Column(
+            //                         mainAxisAlignment: MainAxisAlignment.center,
+            //                         crossAxisAlignment: CrossAxisAlignment.start,
+            //                         children: [
+            //                           Text(
+            //                             transaction!.date,
+            //                             style: const TextStyle(color: AppColors.greyText),
+            //                           ),
+            //                           Text(transaction.category,
+            //                               style: const TextStyle(
+            //                                   color: AppColors.blackColor,
+            //                                   fontSize: 16,
+            //                                   fontWeight: FontWeight.bold)),
+            //                         ],
+            //                       ),
+            //                       const Spacer(),
+            //                       Column(
+            //                         mainAxisAlignment: MainAxisAlignment.center,
+            //                         crossAxisAlignment: CrossAxisAlignment.end,
+            //                         children: [
+            //                           Text(
+            //                             CurrencyHelper.convertToIdr(transaction.amount),
+            //                             style: TextStyle(
+            //                                 color: transaction.type == 'income'
+            //                                     ? Colors.green
+            //                                     : Colors.red),
+            //                           ),
+            //                           const SizedBox(height: 10),
+            //                           GestureDetector(
+            //                             onTap: () async {
+            //                               Get.defaultDialog(
+            //                                 onConfirm: () async {
+            //                                   TransactionService().deleteTransactionById(index);
+            //                                   Get.back();
+            //                                 },
+            //                                 onCancel: () => Get.back(),
+            //                                 middleText: "Ingin menghapus?",
+            //                                 confirmTextColor: Colors.white,
+            //                               );
+            //                             },
+            //                             child: const SizedBox(
+            //                               height: 20,
+            //                               width: 20,
+            //                               child: Icon(Icons.delete, color: Colors.red, size: 20),
+            //                             ),
+            //                           ),
+            //                         ],
+            //                       ),
+            //                     ],
+            //                   ),
+            //                 );
+            //               },
+            //             );
+            //           },
+            //         );
+            //       } else {
+            //         return const CircularProgressIndicator();
+            //       }
+            //     },
+            //   ),
+            // ),
             Container(
-              height: Get.height,
               margin: const EdgeInsets.all(20),
               child: FutureBuilder(
-                future: homeC.transactionService.getAllTransaction(),
+                future: homeC.userService.getAllUsers(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return ValueListenableBuilder(
-                      valueListenable: Hive.box<TransactionItem>('transactionBox').listenable(),
+                      valueListenable: Hive.box<UserData>('userBox').listenable(),
                       builder: (context, box, _) {
-                        if (box.isEmpty) {
+                        var data = box.values
+                            .firstWhere((element) => element.email == profileC.emailText.string)
+                            .transactionItem!
+                            .reversed
+                            .toList();
+                        if (data.isEmpty) {
                           return const Text("No data");
                         }
                         return ListView.separated(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: box.values.length,
+                          itemCount: data.length,
                           separatorBuilder: (BuildContext context, int index) {
                             return const SizedBox(height: 10);
                           },
                           itemBuilder: (BuildContext context, int index) {
-                            var transaction = box.getAt(index);
+                            var transaction = data[index];
                             return Container(
                               height: 75,
                               width: Get.width,
@@ -209,7 +314,7 @@ class HomeView extends GetView<HomeController> {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        transaction!.date,
+                                        transaction.date,
                                         style: const TextStyle(color: AppColors.greyText),
                                       ),
                                       Text(transaction.category,
@@ -237,6 +342,7 @@ class HomeView extends GetView<HomeController> {
                                           Get.defaultDialog(
                                             onConfirm: () async {
                                               TransactionService().deleteTransactionById(index);
+                                              data.removeAt(index);
                                               Get.back();
                                             },
                                             onCancel: () => Get.back(),
@@ -279,12 +385,6 @@ class HomeView extends GetView<HomeController> {
                 content: SingleChildScrollView(
                   child: Column(
                     children: [
-                      // CustomTextInput(
-                      //   label: "Status",
-                      //   textInputType: TextInputType.text,
-                      //   textInputAction: TextInputAction.next,
-                      //   controller: homeC.statusController,
-                      // ),
                       Row(
                         children: [
                           const Text(
@@ -311,12 +411,6 @@ class HomeView extends GetView<HomeController> {
                           ),
                         ],
                       ),
-                      // CustomTextInput(
-                      //   label: "Tipe Pembayaran",
-                      //   textInputType: TextInputType.text,
-                      //   textInputAction: TextInputAction.next,
-                      //   controller: homeC.paymentTypeController,
-                      // ),
                       Obx(
                         () => homeC.chosenType.value == 'income'
                             ? const SizedBox()
@@ -417,7 +511,10 @@ class HomeView extends GetView<HomeController> {
                         );
                         await UserService().updateUser(0, userData);
                       }
-
+                      if (Get.isRegistered<StatsController>() == true) {
+                        print(true);
+                        Get.delete<StatsController>();
+                      }
                       Get.back();
                     },
                     child: const Text("Add"),
@@ -460,7 +557,6 @@ Widget buildIncomeExpense(String type, int amount) {
           Container(
             height: 35,
             width: 35,
-            // color: type == "Income" ? Colors.green : Colors.red,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                   colors: [AppColors.yellowLight, AppColors.purpleLight],
@@ -474,7 +570,12 @@ Widget buildIncomeExpense(String type, int amount) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(type),
-              Text(CurrencyHelper.convertToIdr(amount)),
+              Text(
+                CurrencyHelper.convertToIdr(amount),
+                style: TextStyle(
+                  color: type == "Income" ? Colors.green : Colors.red,
+                ),
+              ),
             ],
           ),
         ],

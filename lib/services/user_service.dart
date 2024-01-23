@@ -23,11 +23,6 @@ class UserService {
     return data;
   }
 
-  // Future<void> deleteTransaction(int index) async {
-  //   var box = await _box;
-  //   await box.delete(index);
-  // }
-
   // Future<void> deleteTransactionById(int index) async {
   //   var box = await _box;
   //   await box.deleteAt(index);

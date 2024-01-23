@@ -25,7 +25,7 @@ class LoginController extends GetxController {
         await DataPreferences.setEmail(googleAccount.email);
         await DataPreferences.setDisplayName(googleAccount.displayName!);
         await DataPreferences.setPhotoUrl(googleAccount.photoUrl!);
-        // await DataPreferences.setLoggedIn();
+        await DataPreferences.setLoggedIn();
 
         Get.offAllNamed(Routes.NAVIGATOR);
       } else {
@@ -33,7 +33,7 @@ class LoginController extends GetxController {
         await DataPreferences.setEmail(googleAccount.email);
         await DataPreferences.setDisplayName(googleAccount.displayName!);
         await DataPreferences.setPhotoUrl(googleAccount.photoUrl!);
-        // await DataPreferences.setLoggedIn();
+        await DataPreferences.setLoggedIn();
 
         Get.offAllNamed(Routes.NAVIGATOR);
       }

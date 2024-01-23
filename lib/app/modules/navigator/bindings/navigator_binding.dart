@@ -11,7 +11,7 @@ class NavigatorBinding extends Bindings {
     Get.lazyPut(() => NavigatorController());
     Get.lazyPut(() => LoginController());
     Get.lazyPut(() => HomeController());
-    Get.lazyPut(() => StatsController());
+    // Get.lazyPut(() => StatsController());
     Get.lazyPut(() => ProfileController());
   }
 }

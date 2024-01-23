@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:money_track_getx/helpers/data_preferences.dart';
 import 'package:money_track_getx/services/transaction_service.dart';
+import 'package:money_track_getx/services/user_service.dart';
+
+import '../../../data/models/transaction_item.dart';
 
 class HomeController extends GetxController {
   var totalBalance = 0.obs;
@@ -11,6 +14,8 @@ class HomeController extends GetxController {
   var expenseCount = 0.obs;
 
   final TransactionService transactionService = TransactionService();
+
+  final UserService userService = UserService();
 
   final TextEditingController idController = TextEditingController();
 
@@ -61,9 +66,28 @@ class HomeController extends GetxController {
     chosenCategory('Accomodation');
   }
 
+  void getInitBalance() async {
+    List<TransactionItem> listTransaction = await UserService().getAllUsers().then((value) => value
+        .firstWhere((element) => element.email == DataPreferences.getEmail()!)
+        .transactionItem!);
+
+    var incomeList = listTransaction.where((element) => element.type == "income");
+    for (var element in incomeList) {
+      incomeCount.value = incomeCount.value + element.amount;
+    }
+
+    var expenseList = listTransaction.where((element) => element.type == "expense");
+    for (var element in expenseList) {
+      expenseCount.value = expenseCount.value + element.amount;
+    }
+
+    totalBalance.value = incomeCount.value - expenseCount.value;
+  }
+
   @override
   void onInit() {
     super.onInit();
+    getInitBalance();
   }
 
   @override
